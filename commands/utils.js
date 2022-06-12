@@ -5,7 +5,9 @@ import {
   print,
   compositionContainer,
   mainContainer,
-  canvasContainer
+  canvasContainer,
+  alertIcon,
+  errorIcon
 } from '../extentions/composition.js';
 
 export const API = 'http://localhost:8077';
@@ -21,6 +23,14 @@ export const State = {
   canvasHeight: 250,
   isHelpOpen: false
 };
+
+export const droneIntel = icon => {
+  icon.style.visibility = 'visible';
+  setTimeout(() => {
+    icon.style.visibility = 'hidden';
+  }, 500);
+};
+
 // ${
 //   params
 //     ? params
@@ -31,9 +41,11 @@ export const State = {
 //cell({ ...std })(`=>()`);
 export const exe = (source, params) => {
   try {
-    const result = new Function(`${source}`);
-    return result();
+    const result = new Function(`${source}`)();
+    droneIntel(alertIcon);
+    return result;
   } catch (err) {
+    droneIntel(errorIcon);
     canvasContainer.style.background = 'var(--background-primary)';
     consoleElement.classList.remove('info_line');
     consoleElement.classList.add('error_line');
@@ -114,13 +126,13 @@ const editCompositionEvent = (element, data) => {
   if (State.lastComposition) {
     mainContainer.parentNode.replaceChild(State.lastComposition, mainContainer);
   }
-  if (data) {
-    const decoded = LZUTF8.decompress(data, {
-      inputEncoding: 'Base64',
-      outputEncoding: 'String'
-    });
-    editor.setValue(decoded);
-  }
+  // if (data) {
+  //   const decoded = LZUTF8.decompress(data, {
+  //     inputEncoding: 'Base64',
+  //     outputEncoding: 'String'
+  //   });
+  //   editor.setValue(decoded);
+  // }
   State.lastComposition = element;
   element.parentNode.replaceChild(mainContainer, element);
   mainContainer.style.display = 'block';

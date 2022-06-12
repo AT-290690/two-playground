@@ -66,19 +66,18 @@ document.addEventListener('keydown', e => {
   }
 });
 newComp().click();
-editor.setValue(`const { draw, background, width, height } = Engine;
-const render = Engine.render();
-render.makeGrid(40);
-
+editor.setValue(`const { draw, background, width, height } = Engine
+render = Engine.render()
+render.makeGrid(40)
 // your code here
 
-const rect = render.makeRectangle(width(0.5), height(0.5), 30, 30);
-rect.noFill();
-rect.stroke = "orchid";
-rect.linewidth = 4;
-rect.rotation = 0.8;
+rect = render.makeRectangle(width(0.5), height(0.5), 30, 30)
+rect.noFill()
+rect.stroke = "orchid"
+rect.linewidth = 4
+rect.rotation = 0.8
 
-render.update();
+render.update()
 `);
 execute({ value: 'FULL' });
 setTimeout(async () => {

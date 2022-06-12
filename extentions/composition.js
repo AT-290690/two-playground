@@ -5,6 +5,8 @@ export const mainContainer = document.getElementById('main-container');
 export const logoButton = document.getElementById('run');
 export const headerContainer = document.getElementById('header');
 export const fullRunButton = document.getElementById('full-run');
+export const alertIcon = document.getElementById('alert');
+export const errorIcon = document.getElementById('error');
 export const compositionContainer = document.getElementById(
   'composition-container'
 );
