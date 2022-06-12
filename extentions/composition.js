@@ -2,14 +2,18 @@ export const consoleElement = document.getElementById('console');
 export const editorContainer = document.getElementById('editor-container');
 export const canvasContainer = document.getElementById('canvas-container');
 export const mainContainer = document.getElementById('main-container');
-export const logoButton = document.getElementById('run');
 export const headerContainer = document.getElementById('header');
+export const focusButton = document.getElementById('focus-button');
+export const appButton = document.getElementById('app-button');
+
 export const fullRunButton = document.getElementById('full-run');
 export const alertIcon = document.getElementById('alert');
 export const errorIcon = document.getElementById('error');
 export const compositionContainer = document.getElementById(
   'composition-container'
 );
+export const editorResizerElement = document.getElementById('editor-resizer');
+export const consoleResizerElement = document.getElementById('console-resizer');
 
 export const print = function (...values) {
   values.forEach(

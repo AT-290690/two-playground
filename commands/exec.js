@@ -10,7 +10,7 @@ import {
   two
 } from '../extentions/composition.js';
 import { editor } from '../main.js';
-import { run, State, createComposition, API, newComp } from './utils.js';
+import { run, State, newComp } from './utils.js';
 
 export const execute = async CONSOLE => {
   consoleElement.classList.remove('error_line');
@@ -86,41 +86,7 @@ export const execute = async CONSOLE => {
       run();
       consoleElement.value = '';
       break;
-    case 'EXIT_FULLSCREEN':
-    case 'EXIT':
-      editorContainer.style.display = 'block';
-      canvasContainer.style.display = 'block';
-      canvasContainer.style.maxHeight = '250px';
-      canvasContainer.style.height = '250px';
-      fullRunButton.style.display = 'none';
-      mainContainer.classList.remove('large');
-      mainContainer.classList.add('small');
-      headerContainer.style.display = 'block';
-      editor.setSize(
-        mainContainer.getBoundingClientRect().width,
-        mainContainer.getBoundingClientRect().height - 40
-      );
-      consoleElement.value = '';
-      State.isFullScreen = false;
-      break;
 
-    case 'FULLSCREEN':
-    case 'FULL':
-      {
-        mainContainer.classList.remove('small');
-        mainContainer.classList.add('large');
-        headerContainer.style.display = 'none';
-        fullRunButton.style.display = 'block';
-        // const w = mainContainer.getBoundingClientRect().width;
-        // const h = mainContainer.getBoundingClientRect().height / 2;
-        // editor.setSize(w, h + 60);
-        canvasContainer.style.maxHeight = 250 + 'px';
-        canvasContainer.style.height = 250 + 'px';
-        consoleElement.value = '';
-        State.isFullScreen = true;
-        window.dispatchEvent(new Event('resize'));
-      }
-      break;
     case 'SIZE':
       // consoleElement.value = '\nSIZE ' + +PARAMS[0];
       if (+PARAMS === 0) {
@@ -128,11 +94,11 @@ export const execute = async CONSOLE => {
         State.canvasHeight = 0;
         // canvasContainer.style.maxHeight = 250 + 'px';
         // canvasContainer.style.height = 250 + 'px';
-        window.dispatchEvent(new Event('resize'));
       } else {
         canvasContainer.style.display = 'block';
-        State.canvasHeight = 250;
       }
+      window.dispatchEvent(new Event('resize'));
+
       // else {
       //   canvasContainer.style.display = 'block';
       //   canvasContainer.style.minHeight = +PARAMS[0] + 'px';
@@ -149,13 +115,11 @@ export const execute = async CONSOLE => {
     case 'FOCUS':
       // execute({ value: 'EMPTY' });
       // newComp();
-      execute({ value: 'FULL' });
       execute({ value: 'SIZE 0' });
       break;
     case 'SHOW':
       // execute({ value: 'EMPTY' });
       // newComp();
-      execute({ value: 'FULL' });
       execute({ value: 'SIZE 1' });
       window.dispatchEvent(new Event('resize'));
 

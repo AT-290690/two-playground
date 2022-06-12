@@ -22,19 +22,24 @@
   </head>
   <body>
     <div id="header">
-      <button id="run" class="header-button">
-        <img src="./assets/images/drone.svg" />
+      <button id="app-button" class="header-button">
+        <img src="./assets/images/logo.svg" />
+      </button>
+      <button id="focus-button" class="header-button">
+        <img src="./assets/images/file.svg" />
       </button>
     </div>
     <p style="margin-bottom: 50px"></p>
     <div id="composition-container"></div>
-    <div id="main-container" class="small">
+    <div id="main-container">
       <div id="canvas-container">
         <img src="./assets/images/404.svg" height="250" width="100%" />
       </div>
+      <hr id="editor-resizer" />
       <div id="editor-container"></div>
     </div>
     <div id="splash-screen"></div>
+    <hr id="console-resizer" />
     <textarea
       id="console"
       spellcheck="false"
