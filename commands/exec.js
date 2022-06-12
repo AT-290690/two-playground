@@ -2,10 +2,7 @@ import {
   canvasContainer,
   compositionContainer,
   consoleElement,
-  editorContainer,
-  headerContainer,
   mainContainer,
-  fullRunButton,
   printErrors,
   two
 } from '../extentions/composition.js';
@@ -18,27 +15,6 @@ export const execute = async CONSOLE => {
 
   const [CMD, ...PARAMS] = CONSOLE.value.trim().split('\n').pop().split(' ');
   switch (CMD?.trim()?.toUpperCase()) {
-    case 'ENCODE':
-      {
-        const encoded = LZUTF8.compress(editor.getValue(), {
-          outputEncoding: 'Base64'
-        });
-        editor.setValue(encoded);
-        consoleElement.value = '';
-      }
-      break;
-    case 'DECODE':
-      {
-        editor.setValue(
-          LZUTF8.decompress(editor.getValue(), {
-            inputEncoding: 'Base64',
-            outputEncoding: 'String'
-          })
-        );
-        consoleElement.value = '';
-      }
-      break;
-
     case 'EMPTY':
       if (State.lastComposition) {
         mainContainer.parentNode.replaceChild(
@@ -57,30 +33,7 @@ export const execute = async CONSOLE => {
         consoleElement.value = '';
       }
       break;
-    case '>.':
-      {
-        const str = CONSOLE.value.split('>. ')[1];
-        consoleElement.value = str
-          .split('')
-          .map((_, i) => str.charCodeAt(i))
-          .join(';');
-      }
-      break;
-    case '<.':
-      {
-        const str = CONSOLE.value.split('<. ')[1];
-        consoleElement.value = String.fromCharCode(...str.split(';'));
-      }
-      break;
-    case 'COMPRESS':
-      editor.setValue(
-        editor
-          .getValue()
-          .toString()
-          .replace(/[ ]+(?=[^"]*(?:"[^"]*"[^"]*)*$)+|\n|\t|;;.+/g, '')
-          .trim()
-      );
-      break;
+
     case 'RUN':
     case 'SAVE':
       run();
@@ -91,11 +44,14 @@ export const execute = async CONSOLE => {
       // consoleElement.value = '\nSIZE ' + +PARAMS[0];
       if (+PARAMS === 0) {
         canvasContainer.style.display = 'none';
+        // plotContainer.style.display = 'none';
+        State.hasPlot = false;
         State.canvasHeight = 0;
         // canvasContainer.style.maxHeight = 250 + 'px';
         // canvasContainer.style.height = 250 + 'px';
       } else {
         canvasContainer.style.display = 'block';
+        State.canvasHeight = +253;
       }
       window.dispatchEvent(new Event('resize'));
 
@@ -108,6 +64,19 @@ export const execute = async CONSOLE => {
       //   );
       // }
       break;
+
+    // case 'PLOT':
+    //   {
+    //     plotContainer.style.display = 'block';
+    //     State.hasPlot = true;
+    //     const plot = editor
+    //       .getValue()
+    //       .split('plot start')[1]
+    //       .split('plot end')[0]
+    //       ?.trim();
+    //     if (plot) makePlot(plot);
+    //   }
+    //   break;
     case 'BLANK':
     case 'NEW':
       execute({ value: 'EMPTY' });
@@ -124,22 +93,6 @@ export const execute = async CONSOLE => {
       window.dispatchEvent(new Event('resize'));
 
       break;
-    case 'B':
-    case 'BIG':
-      consoleElement.style.height = window.innerHeight - 95 + 'px';
-      consoleElement.value = '';
-      break;
-    case 'M':
-    case 'MID':
-      consoleElement.style.height = window.innerHeight / 2 - 40 + 'px';
-      consoleElement.value = '';
-      break;
-    case 'S':
-    case 'SMALL':
-      consoleElement.style.height = '50px';
-      consoleElement.value = '';
-      break;
-
     default:
       printErrors(CMD + ' does not exist!');
       break;

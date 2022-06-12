@@ -4,12 +4,12 @@ import {
   consoleElement,
   editorContainer,
   mainContainer,
-  compositionContainer,
   fullRunButton,
   consoleResizerElement,
   editorResizerElement,
   appButton,
   focusButton
+  // plotButton
 } from './extentions/composition.js';
 import { execute } from './commands/exec.js';
 import { newComp, resizer, run, State } from './commands/utils.js';
@@ -17,7 +17,7 @@ import { newComp, resizer, run, State } from './commands/utils.js';
 fullRunButton.addEventListener('click', run);
 appButton.addEventListener('click', () => execute({ value: 'SHOW' }));
 focusButton.addEventListener('click', () => execute({ value: 'FOCUS' }));
-
+// plotButton.addEventListener('click', () => execute({ value: 'PLOT' }));
 export const editor = CodeMirror(editorContainer, {});
 editor.changeFontSize('20px');
 editor.setSize(
@@ -87,7 +87,7 @@ document.addEventListener('keydown', e => {
     }
   }
 });
-newComp().click();
+newComp();
 // editor.setValue(`const { width, height } =  Engine
 // const render = Engine.render()
 // render.makeGrid(40)

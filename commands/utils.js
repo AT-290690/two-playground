@@ -1,17 +1,12 @@
 import { editor } from '../main.js';
 import {
   consoleElement,
-  editorContainer,
   print,
   compositionContainer,
-  mainContainer,
   canvasContainer,
   alertIcon,
   errorIcon
 } from '../extentions/composition.js';
-
-export const API = 'http://localhost:8077';
-// export const API = 'https://hyper-light.herokuapp.com';
 
 export const State = {
   lastSelection: '',
@@ -79,8 +74,7 @@ export const resizer = (resizer, mousemove, cursor) => {
     );
   };
 };
-
-export const exe = (source, params) => {
+const lastLineAutoReturn = source => {
   let lastLine = editor.getLine(editor.lineCount() - 1)?.trim();
   if (
     lastLine &&
@@ -95,12 +89,11 @@ export const exe = (source, params) => {
       source.substring(0, source.length - lastLine.length) +
       ';return ' +
       lastLine;
+
+    return source;
   }
-  // if (res !== undefined && i === tree.args.length - 1) {
-  //   return ';return ' + res.toString().trimStart();
-  // } else {
-  //   return res;
-  // }
+};
+export const exe = (source, params) => {
   try {
     const result = new Function(`${source}`)();
     droneIntel(alertIcon);
@@ -113,49 +106,25 @@ export const exe = (source, params) => {
     consoleElement.value = consoleElement.value.trim() || err + ' ';
   }
 };
-
-// export const addSpace = str => str + '\n';
-// export const printSelection = (selection, cursor, size) => {
-//   const updatedSelection =
-//     selection[selection.length - 1] === ';'
-//       ? `Engine.print(${selection});`
-//       : `Engine.print(${selection})`;
-//   if (cursor + updatedSelection.length < size) {
-//     editor.replaceSelection(updatedSelection);
-//     exe(editor.getValue(), null);
-//     const head = cursor;
-//     const tail = cursor + updatedSelection.length;
-//     editor.setSelection(head, tail);
-//     editor.replaceSelection(selection);
-//   }
-// };
-// export const stashComments = str => {
-//   State.comments = str.match(/;;.+/g);
-//   return str.replace(/;;.+/g, '##');
-// };
-
-// export const prettier = str => addSpace(str);
-// .replace(/[ ]+(?=[^"]*(?:"[^"]*"[^"]*)*$)+/g, ' ')
-// .split(';')
-// .join('; ')
-// .split('(')
-// .join(' (');
-
+const preprocess = source =>
+  source
+    .replaceAll('<expression>', '`')
+    .replaceAll(
+      '<expression/>',
+      '`' +
+        ".split('\\n').map(x=>x.trim()).filter(Boolean).map(x=>expressions.evaluate(x));"
+    );
 export const run = () => {
   consoleElement.classList.add('info_line');
   consoleElement.classList.remove('error_line');
   consoleElement.value = '';
-  // const cursor = editor.getCursor();
-  // const selection = editor.getSelection();
-  const source = editor.getValue().trim();
-  // const formatted = prettier(source);
-  // if (selection.trim()) {
-  //   printSelection(selection.trim(), cursor, source.length);
-  //   editor.setValue(formatted);
-  // } else {
-  print(exe(source, null));
-  // }
-  // if (cursor < formatted.length) editor.setCursor(cursor);
+  const preprocessed = preprocess(editor.getValue().trim());
+  // console.log(preprocessed);
+  const out = exe(preprocessed, null);
+  if (out) {
+    print(out);
+  }
+  window.expressions.clear();
 };
 
 // export const fromBase64 = (str, params) => {
@@ -186,3 +155,28 @@ export const newComp = (userId = 'Unknown user') => {
   compositionContainer.appendChild(comp);
   return comp;
 };
+// export const makePlot = expression => {
+//   const expr = math.compile(expression);
+//   const xValues = math.range(-10, 10, 0.5).toArray();
+//   const yValues = xValues.map(function (x) {
+//     return expr.evaluate({ x: x });
+//   });
+
+//   // render the plot using plotly
+//   const trace1 = {
+//     x: xValues,
+//     y: yValues,
+//     type: 'scatter'
+//   };
+//   const data = [trace1];
+//   Plotly.newPlot('plot', data, {
+//     margin: {
+//       l: 30,
+//       r: 30,
+//       b: 30,
+//       t: 30,
+//       pad: 4
+//     },
+//     height: 250
+//   });
+// };

@@ -4,8 +4,9 @@ export const canvasContainer = document.getElementById('canvas-container');
 export const mainContainer = document.getElementById('main-container');
 export const headerContainer = document.getElementById('header');
 export const focusButton = document.getElementById('focus-button');
+// export const plotButton = document.getElementById('plot-button');
+// export const plotContainer = document.getElementById('plot');
 export const appButton = document.getElementById('app-button');
-
 export const fullRunButton = document.getElementById('full-run');
 export const alertIcon = document.getElementById('alert');
 export const errorIcon = document.getElementById('error');
@@ -174,6 +175,7 @@ export const two = {
   //   }
   // },
   draw: callback => {
+    console.log('dsds');
     if (callback && typeof callback === 'function') {
       two.svgEngine.unbind('update', callback);
       two.svgEngine.removeEventListener('update');
@@ -198,13 +200,15 @@ two.svgEngine = Object.keys(two)
       }
     }
   );
-
+window.expressions = math.parser();
+window.Vector = Two.Vector;
 window.Engine = {
   render: two.makeScene,
   background: two.background,
   draw: two.draw,
   width: two.width,
   height: two.height,
+
   print: value => print(value)[0]
 };
 export const onError = err => two.destroyComposition();

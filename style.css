@@ -1,5 +1,5 @@
 :root {
-  --gutters: #000000;
+  --gutters: #ff4a98;
   --comment: #3e4d67;
   --linenumbers: #3e4d67;
   --border: #ff4a98;
@@ -26,6 +26,7 @@
   --number: #7f83ff;
   --string: #42c6ff;
   --keyword: #ebe7e5;
+  --self: #2e89ff;
   --separator: rgb(30, 250, 199);
   --special: #eef12a;
   --operator: #ff4a98;
@@ -58,9 +59,13 @@ body {
 .CodeMirror {
   width: 100%;
 }
+/* .cm-gutters {
+  background-color: var(--gutters);
+} */
 .cm-lineNumbers {
-  border-right: 1px dashed var(--comment);
+  /* border-right: 1px dashed var(--background-primary); */
   pointer-events: none;
+  /* background-color: var(--gutters); */
   user-select: none;
 }
 .success_line,
@@ -87,20 +92,27 @@ body {
   border: var(--border-width) solid var(--comment);
   color: var(--icons);
 }
+.main-svg > text {
+  font-family: var(--font-family) !important;
+}
+/* 
+.main-svg {
+  background-color: #000000;
+  color: white;
+} */
 /* #main-container {
   padding: 15px;
 } */
 #canvas-container > img {
   pointer-events: none;
 }
-#canvas-container {
+
+#canvas-container,
+#plot {
   border: var(--border-width) solid var(--border);
   /* min-height: 250px; */
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
   user-select: none;
+  display: none;
 }
 
 #console {
@@ -115,8 +127,7 @@ body {
   /* margin-left: 50px; */
   position: fixed;
   border-top: var(--border-width) solid var(--border);
-
-  pointer-events: none;
+  /* pointer-events: none; */
   bottom: 0;
 }
 
@@ -181,17 +192,18 @@ body {
   /* background-color: #000000b6; */
 }
 #header {
-  right: 10px;
-  top: 10px;
+  right: 50px;
+  bottom: 10px;
   padding: 5px;
   gap: 10px;
-  width: 30px;
+  width: 40px;
   height: auto;
   /* height: 30px;
   min-width: 300px;
   max-width: 400px; */
 
-  display: grid;
+  display: flex;
+  /* grid-template-rows: auto; */
   align-items: center;
 
   border: none;
@@ -326,7 +338,7 @@ input:focus {
   width: 99.1%;
   left: 0;
   height: 0px;
-  bottom: 60px;
+  bottom: 65px;
   z-index: 1000;
 }
 #console-resizer:hover {
