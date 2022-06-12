@@ -19,7 +19,7 @@ appButton.addEventListener('click', () => execute({ value: 'SHOW' }));
 focusButton.addEventListener('click', () => execute({ value: 'FOCUS' }));
 // plotButton.addEventListener('click', () => execute({ value: 'PLOT' }));
 export const editor = CodeMirror(editorContainer, {});
-editor.changeFontSize('20px');
+editor.changeFontSize('15px');
 editor.setSize(
   mainContainer.getBoundingClientRect().width,
   mainContainer.getBoundingClientRect().height - 70

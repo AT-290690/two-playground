@@ -108,7 +108,7 @@ export const exe = (source, params) => {
 };
 const preprocess = source =>
   source
-    .replaceAll('<expression>', '`')
+    .replaceAll('<expression>', ';`')
     .replaceAll(
       '<expression/>',
       '`' +
