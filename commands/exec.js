@@ -1,7 +1,9 @@
 import {
+  appButton,
   canvasContainer,
   compositionContainer,
   consoleElement,
+  focusButton,
   mainContainer,
   printErrors,
   two
@@ -85,10 +87,14 @@ export const execute = async CONSOLE => {
       // execute({ value: 'EMPTY' });
       // newComp();
       execute({ value: 'SIZE 0' });
+      focusButton.style.display = 'none';
+      appButton.style.display = 'block';
       break;
     case 'SHOW':
       // execute({ value: 'EMPTY' });
       // newComp();
+      appButton.style.display = 'none';
+      focusButton.style.display = 'block';
       execute({ value: 'SIZE 1' });
       window.dispatchEvent(new Event('resize'));
 
