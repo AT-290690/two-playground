@@ -106,21 +106,16 @@ export const exe = (source, params) => {
     consoleElement.value = consoleElement.value.trim() || err + ' ';
   }
 };
-const preprocess = source =>
-  source
-    .replaceAll('<expression>', ';`')
-    .replaceAll(
-      '<expression/>',
-      '`' +
-        ".split('\\n').map(x=>x.trim()).filter(Boolean).map(x=>expressions.evaluate(x));"
-    );
+// const preprocess = source =>
+//   source
+
 export const run = () => {
   consoleElement.classList.add('info_line');
   consoleElement.classList.remove('error_line');
   consoleElement.value = '';
-  const preprocessed = preprocess(editor.getValue().trim());
+  // const preprocessed = editor.getValue().trim();
   // console.log(preprocessed);
-  const out = exe(preprocessed, null);
+  const out = exe(editor.getValue().trim(), null);
   if (out) {
     print(out);
   }

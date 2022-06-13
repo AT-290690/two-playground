@@ -201,6 +201,12 @@ two.svgEngine = Object.keys(two)
     }
   );
 window.expressions = math.parser();
+window.expr = x =>
+  x[0]
+    .split('\n')
+    .map(x => x.trim())
+    .filter(Boolean)
+    .map(x => expressions.evaluate(x));
 window.Vector = Two.Vector;
 window.Engine = {
   render: two.makeScene,
