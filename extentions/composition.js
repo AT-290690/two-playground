@@ -175,7 +175,6 @@ export const two = {
   //   }
   // },
   draw: callback => {
-    console.log('dsds');
     if (callback && typeof callback === 'function') {
       two.svgEngine.unbind('update', callback);
       two.svgEngine.removeEventListener('update');
