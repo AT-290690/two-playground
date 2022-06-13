@@ -99,7 +99,7 @@ newComp();
 // rect.rotation = 0.8
 // render.update()
 // `);
-execute({ value: 'FOCUS' });
+execute({ value: 'SHOW' });
 State.sceneHeight = 253;
 State.height = window.innerHeight;
 fullRunButton.style.display = 'block';
